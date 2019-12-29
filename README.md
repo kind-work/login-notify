@@ -14,7 +14,11 @@ Statamic Login Notify is commercial software. You do not need a licence for deve
 
 ```composer require kind-work/login-notify```
 
-### Location Map
+### Copy over the assets
+
+```php artisan vendor:publish --provider="KindWork\LoginNotify\ServiceProvider" --force```
+
+## Location Map
 
 If you would like to send a map showing the location of the login in the email you will need to provide a valid key for the Google Maps Static API. I recommend you restrict this by IP address(es) to the IP(s) used by your servers.
 
@@ -23,3 +27,47 @@ Once you obtain this key add it to your environment variable: `GOOGLE_MAPS_KEY`
 ## Location Lookup
 
 Location lookup is done using the [Laravel Location](https://github.com/stevebauman/location) package. Refer to the documentation for this package to customize the location lookups.
+
+## Fieldtype (forget sessions)
+
+If you would like to give users the ability to forget browsers where they have previously logged in you can add the Login Notify field type to the user blueprint with the key `login_notify_valid_cookies`.
+
+```yaml
+title: User
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: name
+        field:
+          type: text
+          display: Name
+      -
+        handle: email
+        field:
+          type: text
+          input: email
+          display: 'Email Address'
+      -
+        handle: roles
+        field:
+          type: user_roles
+          width: 50
+      -
+        handle: groups
+        field:
+          type: user_groups
+          width: 50
+      -
+        handle: avatar
+        field:
+          type: assets
+          max_files: 1
+      -
+        handle: login_notify_valid_cookies
+        field:
+          type: login_notify
+          localizable: false
+          display: 'Remembered Browsers'
+```

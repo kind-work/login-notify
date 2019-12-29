@@ -23,7 +23,7 @@ class LoginNotifyMailer extends Mailable implements ShouldQueue {
    */
   public function __construct($browser) {
     // Get the Google Maps Key, or return false
-    $googleMapsKey = env('GOOGLE_MAPS_KEY', false);
+    $googleMapsKey = env("GOOGLE_MAPS_KEY", false);
 
     // Set the browser info to be use in the email template
     $this->browser = $browser;

@@ -360,7 +360,7 @@
                         
                         <p>The login was made using {{ $browser["browser"] }} on {{ $browser["os"] }} on {{ $browser["at"] }} from the IP address of {{ $browser["ip"] }} located near {{ $location["cityName"] }}, {{ $location["regionName"] }}, {{ $location["countryName"] }}.</p>
 
-                        <p>If this was you, no need to do anything, if it was not please sign in and reset your password as soon as possible.</p>
+                        <p>If this was you, no need to do anything if it was not please sign in and reset your password as soon as possible.</p>
                       </td>
                     </tr>
                   </table>

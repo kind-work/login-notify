@@ -28,7 +28,7 @@ class CheckBrowser {
       $validCookies = isset($user->data()["login_notify_valid_cookies"]) ? $user->data()["login_notify_valid_cookies"] : [];
 
       // If the cookie is in the list of valid cookies for the user skip, otherwise ...
-      if (sizeof($validCookies) < 1 || !in_array($cookie, array_keys($validCookies))) {
+      if (count($validCookies) < 1 || !in_array($cookie, array_keys($validCookies))) {
         // Make a random string
         $value = Str::random(32);
 

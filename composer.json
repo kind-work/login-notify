@@ -1,0 +1,33 @@
+{
+  "name": "kind-work/login-notify",
+  "description": "Statamic 3 Login Notify addon",
+  "type": "statamic-addon",
+  "require": {
+    "hisorange/browser-detect": "^3.1.4 || ^4.0.0",
+    "stevebauman/location": "^5.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "KindWork\\LoginNotify\\": "src"
+    }
+  },
+  "authors": [
+    {
+      "name": "Jonathan Cohlmeyer"
+    }
+  ],
+  "support": {
+    "email": "help@kind.work"
+  },
+  "extra": {
+    "statamic": {
+      "name": "Statamic 3 Login Notify",
+      "description": "Statamic 3 Login Notify addon"
+    },
+    "laravel": {
+      "providers": [
+        "KindWork\\LoginNotify\\ServiceProvider"
+      ]
+    }
+  }
+}

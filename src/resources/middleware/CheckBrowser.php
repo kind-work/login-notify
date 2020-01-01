@@ -46,7 +46,7 @@ class CheckBrowser {
         $user->save();
         
         // Set the cookie in the browser with a lifetime of 1 week
-        Cookie::queue("login_notify", $value, 10080);
+        Cookie::queue("login_notify", $value, Config::get('login_notify.cookie_ttl_minutes'));
         
         // Send the user an email saying they have logged in in a new browser
         Mail::to($user->email())->send(new LoginNotifyMailer($validCookies[$value]));

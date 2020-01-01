@@ -118,16 +118,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [Fieldtype],
   data: function data() {
     return {
-      data: this.value
+      data: this.value,
+      count: 0
     };
+  },
+  computed: {
+    browserCount: function browserCount() {
+      return (Object.keys(this.data) || []).length;
+    }
   },
   methods: {
     remove: function remove(key) {
-      Vue["delete"](this.data, key);
+      // Remove the data from the data object
+      Vue["delete"](this.data, key); // Increment the count of items to be removed
+
+      this.count++;
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    // Listen for the toast success msg
+    this.$events.$on('toast.success', function (payload) {
+      // Make sure it comes from saved
+      if (payload === 'Saved') {
+        // Set the cunt of items to be forgotten to 0
+        _this.count = 0;
+      }
+    });
+  },
+  watch: {
+    data: function data(_data) {
+      this.update(_data);
     }
   }
 });
@@ -146,7 +178,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "img[data-v-69eb7af5] {\n  height: auto;\n  max-width: 100%;\n  width: 300px;\n}\n@media (max-width: 767px) {\n.login-notify-list-item-content[data-v-69eb7af5] {\n    clear: both;\n    padding-top: 1rem;\n}\n}\n@media (min-width: 768px) {\nimg[data-v-69eb7af5] {\n    float: left;\n    height: auto;\n    max-width: 40%;\n    padding-right: 1rem;\n}\n.login-notify-list-item-content[data-v-69eb7af5] {\n    float: left;\n    width: 60%;\n}\n.login-notify-list-item[data-v-69eb7af5]:after {\n    content: \"\";\n    display: table;\n    clear: both;\n}\n}", ""]);
+exports.push([module.i, "img[data-v-69eb7af5] {\n  height: auto;\n  max-width: 100%;\n  width: 300px;\n}\n.login-notify-info[data-v-69eb7af5] {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  padding: 16px;\n  background-color: #f5f8fc;\n  border-width: 1px;\n  border-radius: 3px;\n}\n@media (max-width: 767px) {\n.login-notify-list-item-content[data-v-69eb7af5] {\n    clear: both;\n    padding-top: 1rem;\n}\n}\n@media (min-width: 768px) {\nimg[data-v-69eb7af5] {\n    float: left;\n    height: auto;\n    max-width: 40%;\n    padding-right: 1rem;\n}\n.login-notify-list-item-content[data-v-69eb7af5] {\n    float: left;\n    width: 60%;\n}\n.login-notify-list-item[data-v-69eb7af5]:after {\n    content: \"\";\n    display: table;\n    clear: both;\n}\n}", ""]);
 
 // exports
 
@@ -798,8 +830,26 @@ var render = function() {
     "div",
     { staticClass: "login-notify-list" },
     [
-      _vm.data.length < 1
-        ? _c("p", [_vm._v("You have no registered browsers at the moment.")])
+      _vm.count > 0
+        ? _c("div", { staticClass: "login-notify-info mb-2" }, [
+            _c("p", { staticClass: "text-xs text-grey-60" }, [
+              _vm._v(
+                "You have " +
+                  _vm._s(_vm.count) +
+                  " browser" +
+                  _vm._s(_vm.count === 1 ? "" : "s") +
+                  " ready to be forgotten. Just hit save."
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.browserCount < 1 && _vm.count < 1
+        ? _c("div", { staticClass: "login-notify-info mb-2" }, [
+            _c("p", { staticClass: "text-xs text-grey-60" }, [
+              _vm._v("You have no registered browsers at the moment.")
+            ])
+          ])
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.data, function(item, key) {

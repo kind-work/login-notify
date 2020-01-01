@@ -23,16 +23,27 @@ class LoginNotifyMailer extends Mailable implements ShouldQueue {
    */
   public function __construct($browser) {
     // Get the Google Maps Key, or return false
-    $googleMapsKey = env("GOOGLE_MAPS_KEY", false);
+    $googleMapsKey = Config::get("login_notify.google_maps_api_key");
 
     // Set the browser info to be use in the email template
     $this->browser = $browser;
 
-    // Get location info & set to be used in template
-    $this->location = Location::get($browser["ip"])->toArray();
+    // Check to see if the IP is in cache & set to be used in template
+    $this->location = cache("ln_ip_" . $browser["ip"], false);
+
+    // Round lat / lng
+    $lat = round($this->location["latitude"], Config::get("login_notify.map_precision"));
+    $lng = round($this->location["longitude"], Config::get("login_notify.map_precision"));
+
+    if (!$this->location) {
+      // Get location info fresh if not
+      $this->location = Location::get($browser["ip"])->toArray();
+      // Store it in the cache for later
+      cache(["ln_ip_" . $browser["ip"] => $this->location], Config::get("login_notify.ip_lookup_cache")); 
+    }
 
     // Construct the url for the image to be attached / inlined into the email using the location
-    $this->mapImage = $googleMapsKey ? "https://maps.googleapis.com/maps/api/staticmap?center=" . $this->location["latitude"] ."," . $this->location["longitude"] . "&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7C" . $this->location["latitude"] ."," . $this->location["longitude"] . "&key=" . $googleMapsKey : false;
+    $this->mapImage = $googleMapsKey ? "https://maps.googleapis.com/maps/api/staticmap?center=" . $lat . "," . $lng . "&zoom=" . Config::get("login_notify.map_zoom_level") . "&size=600x300&maptype=roadmap&markers=color:red%7C" . $lat ."," . $lng . "&key=" . $googleMapsKey : false;
   }
 
   /**

@@ -1,3 +1,4 @@
+![Statamic 3.0+](https://img.shields.io/badge/Statamic-3.0+-FF269E?style=for-the-badge&link=https://statamic.com)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5e227618f67b446da74a29b19b252d06)](https://www.codacy.com/manual/jcohlmeyer/login-notify?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kind-work/login-notify&amp;utm_campaign=Badge_Grade)
 
 ## Login Notify for Statamic 3

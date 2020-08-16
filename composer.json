@@ -1,6 +1,6 @@
 {
   "name": "kind-work/login-notify",
-  "description": "Statamic 3 Login Notify addon",
+  "description": "Send email notifications whenever you log at a new location.",
   "type": "statamic-addon",
   "require": {
     "hisorange/browser-detect": "^3.1.4 || ^4.0.0",
@@ -22,7 +22,7 @@
   "extra": {
     "statamic": {
       "name": "Statamic 3 Login Notify",
-      "description": "Statamic 3 Login Notify addon"
+      "description": "Send email notifications whenever you log at a new location."
     },
     "laravel": {
       "providers": [

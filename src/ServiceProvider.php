@@ -6,19 +6,21 @@ use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider {
   protected $scripts = [
-    __DIR__.'/../dist/js/scripts.js'
+    __DIR__.'/../dist/js/scripts.js',
   ];
 
   protected $stylesheets = [
-    __DIR__.'/../dist/css/styles.css'
+    __DIR__.'/../dist/css/styles.css',
   ];
 
-  protected $middleware = [
-    'cp' => [Middleware\CheckBrowser::class],
+  protected $listen = [
+    'Illuminate\Auth\Events\Login' => [
+      'KindWork\LoginNotify\Listeners\LoginNotifyListener',
+    ],
   ];
 
   protected $fieldtypes = [
-    Fieldtypes\LoginNotifyFieldtype::class
+    Fieldtypes\LoginNotifyFieldtype::class,
   ];
 
   public function boot() {

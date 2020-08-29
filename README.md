@@ -15,10 +15,6 @@ Statamic Login Notify is commercial software. You do not need a licence for deve
 
 ```composer require kind-work/login-notify```
 
-### Copy over the assets
-
-```php artisan vendor:publish --provider="KindWork\LoginNotify\ServiceProvider" --force```
-
 ## Location Map
 
 If you would like to send a map showing the location of the login in the email you will need to provide a valid key for the Google Maps Static API. I recommend you restrict this by IP address(es) to the IP(s) used by your servers.

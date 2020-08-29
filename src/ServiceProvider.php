@@ -26,16 +26,25 @@ class ServiceProvider extends AddonServiceProvider {
   public function boot() {
     parent::boot();
 
-    $this->publishes([
-      __DIR__.'/resources/config/login_notify.php' => config_path('login_notify.php'),
-    ]);
+    $this->bootAddonConfig()->bootAddonViews();
+  }
 
-    $this->loadViewsFrom(__DIR__.'/resources/views', 'login-notify');
+  protected function bootAddonConfig() {
+    $this->publishes([
+      __DIR__.'/../resources/config/login_notify.php' => config_path('login_notify.php'),
+    ]);
+    return $this;
+  }
+
+  protected function bootAddonViews() {
+    $this->loadViewsFrom(__DIR__.'/../resources/views', 'login-notify');
+    $this->publishes([__DIR__.'/../resources/views' => resource_path('views/vendor/login-notify')], 'login-notify-views');
+    return $this;
   }
 
   public function register() {
     $this->mergeConfigFrom(
-      __DIR__.'/resources/config/login_notify.php', 'login_notify'
+      __DIR__.'/../resources/config/login_notify.php', 'login_notify'
     );
   }
 }

@@ -12,6 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class LoginNotifyMailer extends Mailable implements ShouldQueue {
   use Queueable, SerializesModels;
 
+  private $app;
   public $browser;
   public $location;
   public $mapImage;
@@ -22,6 +23,8 @@ class LoginNotifyMailer extends Mailable implements ShouldQueue {
    * @return void
    */
   public function __construct($browser) {
+    $this->app = Config::get('app.name');
+
     // Get the Google Maps Key, or return false
     $googleMapsKey = Config::get("login_notify.google_maps_api_key");
 
@@ -58,7 +61,7 @@ class LoginNotifyMailer extends Mailable implements ShouldQueue {
    */
   public function build() {
     // Set up the email
-    $email = $this->subject(Config::get('app.name') . " new login")
+    $email = $this->subject($this->app . " new login")
                   ->view("login-notify::email")
                   ->text("login-notify::email-plain");
 

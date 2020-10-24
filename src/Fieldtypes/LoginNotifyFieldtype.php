@@ -4,10 +4,25 @@ namespace KindWork\LoginNotify\Fieldtypes;
 
 use Config;
 use Location;
-use Statamic\Facades\User;
-use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use Statamic\Fields\Fieldtype;
 
-class LoginNotifyFieldtype extends \Statamic\Fields\Fieldtype {
+class LoginNotifyFieldtype extends Fieldtype {
+  private $googleMapsKey;
+  private $location;
+  private $lookupIpCache;
+  private $mapCache;
+  private $mapPercision;
+  private $mapZoomLevel;
+
+  public function __construct() {
+    $this->googleMapsKey = Config::get("login_notify.google_maps_api_key");
+    $this->lookupIpCache = Config::get("login_notify.ip_lookup_cache");
+    $this->mapPercision = Config::get("login_notify.map_precision");
+    $this->mapCache = Config::get("login_notify.map_cache");
+    $this->mapZoomLevel = Config::get("login_notify.map_zoom_level");
+  }
+
   public function preload() {
     return [];
   }
@@ -16,9 +31,6 @@ class LoginNotifyFieldtype extends \Statamic\Fields\Fieldtype {
     $data = $data ?? [];
 
     return array_map(function($item) {
-      // Get the Google Maps Key, or return false
-      $googleMapsKey = Config::get("login_notify.google_maps_api_key");
-
       // Check to see if the IP lookup info is in cache
       $location = cache("ln_ip_" . $item["ip"], false);
       if (!$location) {
@@ -27,7 +39,7 @@ class LoginNotifyFieldtype extends \Statamic\Fields\Fieldtype {
         // Store in cache for later
         if ($location) {
           $location = $location->toArray();
-          cache(["ln_ip_" . $item["ip"] => $location], Config::get("login_notify.ip_lookup_cache"));
+          cache(["ln_ip_" . $item["ip"] => $location], $this->lookupIpCache);
         }
       }
 
@@ -37,9 +49,9 @@ class LoginNotifyFieldtype extends \Statamic\Fields\Fieldtype {
       }
 
       // If Google Maps key add the image (base 64 url)
-      if ($googleMapsKey && $location) {
-        $lat = round($location["latitude"], Config::get("login_notify.map_precision"));
-        $lng = round($location["longitude"], Config::get("login_notify.map_precision"));
+      if ($this->googleMapsKey && $location) {
+        $lat = round($location["latitude"], $this->mapPercision);
+        $lng = round($location["longitude"], $this->mapPercision);
 
         // Check to see if the image is in cache
         $image = cache("ln_img_" . $lat . "_" . $lng);
@@ -47,13 +59,15 @@ class LoginNotifyFieldtype extends \Statamic\Fields\Fieldtype {
         // If the image is not in the cache lets get it
         if (!$image) {
           // Construct the image url
-          $imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" . $lat . "," . $lng . "&zoom=" . Config::get("login_notify.map_zoom_level") . "&size=450x450&maptype=roadmap&markers=color:red%7C" . $lat ."," . $lng . "&key=" . $googleMapsKey;
+          $imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" . $lat . "," . $lng . "&zoom=" . $this->mapZoomLevel . "&size=450x450&maptype=roadmap&markers=color:red%7C" . $lat ."," . $lng . "&key=" . $this->googleMapsKey;
 
           // Get the Image
-          $image = file_get_contents($imageUrl);
+          $client = new Client();
+          $response = $client->request('GET', $imageUrl);
+          $image = $response->getBody();
 
           // Cache the image for later
-          cache(["ln_img_" . $lat . "_" . $lng => $image], Config::get("login_notify.map_cache"));
+          cache(["ln_img_" . $lat . "_" . $lng => $image], $this->mapCache);
         }
 
         // If we have the image base 64 encode it so we do not share the key (also key should be restricted to server IP, I hope).

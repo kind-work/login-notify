@@ -3,7 +3,7 @@
     <div class="login-notify-info mb-2" v-if="count > 0">
       <p class="text-xs text-grey-60">You have {{ count }} browser{{ count === 1 ? '' : 's' }} ready to be forgotten. Just hit save.</p>
     </div>
-  
+
     <div class="login-notify-info mb-2" v-if="browserCount < 1 && count < 1">
       <p class="text-xs text-grey-60">You have no registered browsers at the moment.</p>
     </div>
@@ -12,8 +12,6 @@
       <img v-if="item.image" :src="item.image" align="left" />
 
       <div class="login-notify-list-item-content">
-        <h2>{{ item.app }}</h2>
-
         <p>
           <strong>Location:</strong> {{ item.cityName }}, {{ item.regionName }}, {{ item.countryName }}<br />
           <strong>Browser:</strong> {{ item.browser }}<br />

@@ -2,16 +2,17 @@
 
 namespace KindWork\LoginNotify;
 
+use Illuminate\Support\Facades\Storage;
 use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider {
   protected $scripts = [
-    __DIR__.'/../dist/js/scripts.js',
+    __DIR__.'/../dist/js/scripts.js?v=1.1.0&t=.js',
   ];
 
-  protected $stylesheets = [
-    __DIR__.'/../dist/css/styles.css',
-  ];
+  // protected $stylesheets = [
+  //   __DIR__.'/../dist/css/styles.css',
+  // ];
 
   protected $listen = [
     'Illuminate\Auth\Events\Login' => [

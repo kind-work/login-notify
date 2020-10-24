@@ -4,7 +4,7 @@
 [![Commercial License](https://img.shields.io/badge/License-Commercial-yellow)](https://statamic.com/marketplace/addons/login-notify)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/868d24822a32419eb4df43c52302e8ae)](https://www.codacy.com/gh/kind-work/login-notify/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kind-work/login-notify&amp;utm_campaign=Badge_Grade)
 
-Statamic Login Notify is a middleware addon for [Statamic 3](https://github.com/statamic/cms) that sends email notifications when a user logs into a new device.
+Statamic Login Notify is an addon for [Statamic 3](https://github.com/statamic/cms) that sends email notifications when a user logs into a new device.
 
 ## Requirements
 * PHP 7.2+

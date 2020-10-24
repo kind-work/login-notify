@@ -40,6 +40,15 @@ class LoginNotifyListener {
       // Get the valid cookies for the user, if any, if not an empty array
       $validCookies = isset($user->data()["login_notify_valid_cookies"]) ? $user->data()["login_notify_valid_cookies"] : [];
 
+      // Remove expired cookies
+      foreach($validCookies as $key=>$cookie) {
+        $now = Carbon::now();
+        $expireTime = Carbon::parse($cookie["at"])->addMinutes(Config::get("login_notify.cookie_ttl_minutes"));
+        if ($now->greaterThan($expireTime)) {
+          unset($validCookies[$key]);
+        }
+      }
+
       // If the cookie is in the list of valid cookies for the user skip, otherwise ...
       if (count($validCookies) < 1 || !in_array($cookie, array_keys($validCookies))) {
         // Make a random string

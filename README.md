@@ -1,20 +1,23 @@
-[![Statamic 3.0+](https://img.shields.io/badge/Statamic-3.0%2B-FF269E)](https://statamic.com)
-[![Commercial License](https://img.shields.io/badge/License-Commercial-yellow)](#)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/868d24822a32419eb4df43c52302e8ae)](https://www.codacy.com/gh/kind-work/login-notify/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kind-work/login-notify&amp;utm_campaign=Badge_Grade)
+# Login Notify for Statamic 3
 
-## Login Notify for Statamic 3
+[![Statamic 3.0+](https://img.shields.io/badge/Statamic-3.0%2B-FF269E)](https://statamic.com)
+[![Commercial License](https://img.shields.io/badge/License-Commercial-yellow)](https://statamic.com/marketplace/addons/login-notify)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/868d24822a32419eb4df43c52302e8ae)](https://www.codacy.com/gh/kind-work/login-notify/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kind-work/login-notify&amp;utm_campaign=Badge_Grade)
 
 Statamic Login Notify is a middleware addon for [Statamic 3](https://github.com/statamic/cms) that sends email notifications when a user logs into a new device.
 
-## Pricing
+## Requirements
+* PHP 7.2+
+* Statamic v3+
+* Laravel 7+
 
-Statamic Login Notify is commercial software. You do not need a licence for development but when you are ready to deploy the site to production please purchase a licence per site on the [Statamic Marketplace](https://statamic.com/marketplace/addons/login-notify).
-
-## Install
+## Installation
 
 ### Install the addon using composer
 
-```composer require kind-work/login-notify```
+```bash
+composer require kind-work/login-notify
+```
 
 ## Location Map
 
@@ -36,32 +39,7 @@ sections:
   main:
     display: Main
     fields:
-      -
-        handle: name
-        field:
-          type: text
-          display: Name
-      -
-        handle: email
-        field:
-          type: text
-          input: email
-          display: 'Email Address'
-      -
-        handle: roles
-        field:
-          type: user_roles
-          width: 50
-      -
-        handle: groups
-        field:
-          type: user_groups
-          width: 50
-      -
-        handle: avatar
-        field:
-          type: assets
-          max_files: 1
+      ...
       -
         handle: login_notify_valid_cookies
         field:
@@ -69,3 +47,12 @@ sections:
           localizable: false
           display: 'Remembered Browsers'
 ```
+
+## Changelog
+Please see the [Release Notes](https://statamic.com/addons/jrc9designstudio/login-notify/release-notes) for more information what has changed recently.
+
+## Security
+If you discover any security-related issues, please email [security@kind.work](mailto:security@kind.work) instead of using the issue tracker.
+
+## License
+This is commercial software. You may use the package for your sites. Each site requires its own license. You can purchase a licence from [The Statamic Marketplace](https://statamic.com/addons/jrc9designstudio/login-notify).

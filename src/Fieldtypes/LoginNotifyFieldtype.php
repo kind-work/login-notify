@@ -9,7 +9,6 @@ use Statamic\Fields\Fieldtype;
 
 class LoginNotifyFieldtype extends Fieldtype {
   private $googleMapsKey;
-  private $location;
   private $lookupIpCache;
   private $mapCache;
   private $mapPercision;

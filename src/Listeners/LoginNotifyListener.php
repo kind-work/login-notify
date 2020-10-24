@@ -33,7 +33,7 @@ class LoginNotifyListener {
     $this->browser = Browser::browserFamily();
     // Get the login notify cookie if it exists
     $this->cookie = Cookie::get("login_notify");
-    $this->now = $now = Carbon::now();
+    $this->now = Carbon::now();
     $this->os = Browser::platformName();
     $this->request = $request;
   }

@@ -7,7 +7,7 @@ use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider {
   protected $scripts = [
-    __DIR__.'/../dist/js/scripts.js?v=1.1.0&t=.js',
+    __DIR__.'/../dist/js/scripts.js',
   ];
 
   // protected $stylesheets = [
